@@ -1,0 +1,47 @@
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+	font-family: $font-family, sans-serif;
+	outline: none;
+	background: $color-app-background;
+}
+
+.App {
+	text-align: center;
+}
+
+.App-header {
+	position: absolute;
+	pointer-events: none;
+	min-height: 20vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: $color-white;
+	z-index: 1;
+}
+
+.canvas-container {
+	position: fixed;
+	top: 0;
+	display: block;
+	z-index: 0;
+	height: 100%;
+	width: 100%;
+
+	canvas {
+		display: block;
+		height: 100%;
+		width: 100%;
+		outline: none;
+	}
+}
