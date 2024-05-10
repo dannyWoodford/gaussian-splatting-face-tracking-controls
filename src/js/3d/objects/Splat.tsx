@@ -17,7 +17,8 @@ export default function Splat() {
 			<lumaSplats
 				semanticsMask={LumaSplatsSemantics.FOREGROUND | LumaSplatsSemantics.BACKGROUND}
 				source='https://lumalabs.ai/capture/a68f48e0-026f-4701-933c-457678434414'
-				position={[0, 0, -1]}
+				position={[-1, 0, -13]}
+				rotation={[0, 2.6, 0]}
 				scale={1}
 				particleRevealEnabled={true}
 			/>
