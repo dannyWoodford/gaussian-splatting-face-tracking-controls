@@ -9,7 +9,9 @@ import { Leva } from 'leva'
 import Scene from './3d/Scene'
 
 export default function CanvasContainer() {
-	const { isDev, canvasLoaded } = useCanvas()
+	const { isDev,
+		// canvasLoaded 
+	} = useCanvas()
 
 	return (
 		<div className='canvas-container'>
