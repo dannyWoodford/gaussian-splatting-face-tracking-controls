@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { AdaptiveDpr, PerspectiveCamera, OrbitControls } from '@react-three/drei'
+import { AdaptiveDpr } from '@react-three/drei'
 import { Perf } from 'r3f-perf'
 import { useCanvas } from '../context/CanvasContext'
 
@@ -20,10 +20,10 @@ export default function CanvasContainer() {
 				</div>
 			</div>
 
-			<Canvas shadows>
-			<OrbitControls />
-			<PerspectiveCamera />
-
+			<Canvas 
+			// shadows 
+			// gl={{antialias: false,}}
+			>
 				<Suspense fallback={<Loading />}>
 					<Scene />
 				</Suspense>
