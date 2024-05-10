@@ -3,6 +3,7 @@ import { AdaptiveDpr, FaceLandmarker } from '@react-three/drei'
 import { Perf } from 'r3f-perf'
 import { useCanvas } from '../context/CanvasContext'
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
+import { Leva } from 'leva'
 
 
 import Scene from './3d/Scene'
@@ -12,13 +13,15 @@ export default function CanvasContainer() {
 
 	return (
 		<div className='canvas-container'>
-			<div className={` ${canvasLoaded ? 'loaded' : ''}`}>
+			{/* <div className={` ${canvasLoaded ? 'loaded' : ''}`}>
 				<div id='loader-wrapper'>
 					<div id='loader'></div>
 					<div className='loader-section section-left'></div>
 					<div className='loader-section section-right'></div>
 				</div>
-			</div>
+			</div> */}
+
+			<Leva hidden={!isDev} />
 
 			<Canvas
 			>

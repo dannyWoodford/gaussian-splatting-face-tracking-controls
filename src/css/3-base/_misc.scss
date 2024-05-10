@@ -1,5 +1,6 @@
 * {
 	box-sizing: border-box;
+	// disable navigation swiping so page is'nt changed when using "simulated" OrbitControls (i.e. zoom by using window wheel event)
 	overscroll-behavior-x: none;
 }
 
@@ -10,7 +11,7 @@ body {
 	width: 100%;
 	font-family: $font-family, sans-serif;
 	outline: none;
-	background: $color-app-background;
+	background: $color-black;
 }
 
 .App {
