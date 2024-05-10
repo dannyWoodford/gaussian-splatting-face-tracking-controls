@@ -9,11 +9,11 @@ function App() {
   return (
 		<div className="App">
 			<CanvasProvider>
-				<header className="App-header">
+				{/* <header className="App-header">
 					<p>
 						R3F--typescript--scss--Starter_Template
 					</p>
-				</header>
+				</header> */}
 
 				<CanvasContainer />
 			</CanvasProvider>

@@ -3,139 +3,115 @@ import { useCanvas } from '../../context/CanvasContext'
 import { PerspectiveCamera, OrbitControls, FaceControls, useHelper } from '@react-three/drei'
 import { useThree, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-
-import { useControls, buttonGroup, folder } from 'leva'
+import { useControls } from 'leva'
 import { easing } from 'maath'
 
 
-import Lighting from './setup/Lighting'
 import Splat from './objects/Splat'
 
 export default function Scene() {
 	const { setCanvasLoaded } = useCanvas()
 
-	  const { scene, camera } = useThree() // This will just crash
+	// ____ Used for Loading Screen  _________________________________________________________________________________
+	useEffect(() => {
+		setCanvasLoaded(true)
+	}, [setCanvasLoaded])
 
-		// Initialize and Reset timeline
-		useEffect(() => {
-			setCanvasLoaded(true)
-		}, [setCanvasLoaded])
+	// ____ Debug FaceControls  _________________________________________________________________________________
+	const gui = useControls({
+		camera: { value: 'user', options: ['user', 'cc'] },
+	})
 
-		useEffect(() => {
-			scene.fog = new THREE.FogExp2(new THREE.Color('black').convertLinearToSRGB(), 0.028)
-			scene.background = scene.fog.color
-		}, [scene])
+	const userCamRef = useRef()
+	useHelper(gui.camera !== 'user' && userCamRef, THREE.CameraHelper)
 
 
-		  // const vids = ['https://storage.googleapis.com/abernier-portfolio/metahumans.mp4', 'https://storage.googleapis.com/abernier-portfolio/metahumans2.mp4']
+	// ____ FaceControls  _________________________________________________________________________________
+	const [userCam, setUserCam] = useState()
+	const smoothTimeValue = 0.85;
 
-			const gui = useControls({
-				camera: { value: 'user', options: ['user', 'cc'] },
-				// webcam: folder({
-				// 	webcam: true,
-				// 	autostart: true,
-				// 	webcamVideoTextureSrc: {
-				// 		value: vids[0],
-				// 		options: vids,
-				// 		optional: true,
-				// 		disabled: true,
-				// 	},
-				// 	video: buttonGroup({
-				// 		opts: {
-				// 			pause: () => faceControlsApiRef.current?.pause(),
-				// 			play: () => faceControlsApiRef.current?.play(),
-				// 		},
-				// 	}),
-				// }),
-				smoothTime: { value: 0.45, min: 0.000001, max: 1 },
-				offset: true,
-				offsetScalar: { value: 60, min: 10, max: 500 },
-				eyes: false,
-				eyesAsOrigin: true,
-				// origin: { value: 0, optional: true, disabled: true, min: 0, max: 477, step: 1 },
-				// depth: { value: 0.15, min: 0, max: 1, optional: true, disabled: true },
-				// player: folder({
-				// 	rotation: [0, 0, 0],
-				// 	position: [-0, 0.2, 0],
-				// }),
-			})
+	const controls = useThree((state) => state.controls)
+	const faceControlsApiRef = useRef()
 
-			const userCamRef = useRef()
-			useHelper(gui.camera !== 'user' && userCamRef, THREE.CameraHelper)
+	const onVideoFrame = useCallback(
+		(e) => {
+			controls.detect(e.texture.source.data, e.time)
+		},
+		[controls]
+	)
 
-			const [userCam, setUserCam] = useState()
+	const [current] = useState(() => new THREE.Object3D())
+	useFrame((_, delta) => {
+		if (faceControlsApiRef.current) {
+			const target = faceControlsApiRef.current.computeTarget()
 
-			const controls = useThree((state) => state.controls)
-			const faceControlsApiRef = useRef()
+			const eps = 1e-9
+			easing.damp3(current.position, target.position, smoothTimeValue, delta, undefined, undefined, eps)
+			easing.dampE(current.rotation, target.rotation, smoothTimeValue, delta, undefined, undefined, eps)
 
-			// const screenMatRef = useRef(null)
-			const onVideoFrame = useCallback(
-				(e) => {
-					controls.detect(e.texture.source.data, e.time)
+			userCam.position.copy(current.position)
+			userCam.rotation.copy(current.rotation)
+		}
+	})
 
-					// screenMatRef.current.map = e.texture
-				},
-				[controls]
-			)
+	// ____ Simulate OrbitControl Zoom _________________________________________________________________________________
+	const [scrollNumber, setScrollNumber] = useState(7)
 
-			const [current] = useState(() => new THREE.Object3D())
-			useFrame((_, delta) => {
-				if (faceControlsApiRef.current) {
-					const target = faceControlsApiRef.current.computeTarget()
+	useEffect(() => {
+		const handleWheel = (event) => {
+			// Calculate the increment or decrement based on wheel direction
+			const increment = event.deltaY > 0 ? -1 : 1
 
-					// faceControlsApiRef.current.update(delta, target);
-					// userCam.position.copy(target.position);
-					// userCam.rotation.copy(target.rotation);
-					const eps = 1e-9
-					easing.damp3(current.position, target.position, gui.smoothTime, delta, undefined, undefined, eps)
-					easing.dampE(current.rotation, target.rotation, gui.smoothTime, delta, undefined, undefined, eps)
+			// Define the sensitivity factor
+			const sensitivityFactor = 0.4 // Adjust this value as needed
 
-					userCam.position.copy(current.position)
-					userCam.rotation.copy(current.rotation)
-				}
-			})
+			// Calculate the new scroll number within the desired range
+			const newScrollNumber = Math.min(Math.max(scrollNumber + increment * sensitivityFactor, 2), 35)
 
-		return (
-			<>
-				{/* <Lighting /> */}
+			// Update the state with the new scroll number
+			setScrollNumber(newScrollNumber)
 
-				<PerspectiveCamera
-					ref={(cam) => {
-						userCamRef.current = cam
-						setUserCam(cam)
-					}}
-					makeDefault={gui.camera === 'user'}
-					fov={35}
-					// position={[0, 0, -5]}
-					// position={[-0.43142223655091505, -0.9836373086053689, -3.8445090520469414]}
-				/>
-				<OrbitControls 
-				// autoRotate 
-				// autoRotateSpeed={0.3}
-				enableDamping target={[1.2, -0.5, -1.6]} />
+			// Prevent default behavior to avoid scrolling the page
+			event.preventDefault()
+		}
 
-				<FaceControls
-					// offsetScalar={15}
-					camera={userCam}
-					ref={faceControlsApiRef}
-					// autostart={gui.autostart}
-					makeDefault
-					// webcam={gui.webcam}
-					// webcamVideoTextureSrc={gui.webcamVideoTextureSrc}
-					manualUpdate
-					manualDetect
-					onVideoFrame={onVideoFrame}
-					smoothTime={gui.smoothTime}
-					offset={gui.offset}
-					offsetScalar={gui.offsetScalar}
-					eyes={gui.eyes}
-					eyesAsOrigin={gui.eyesAsOrigin}
-					depth={gui.depth}
-					facemesh={{ origin: gui.origin, position: [0, 0, 0] }}
-					debug={gui.camera !== 'user'}
-				/>
+		// Add event listener for the wheel event
+		window.addEventListener('wheel', handleWheel, { passive: false })
 
-				<Splat />
-			</>
-		)
+		// Clean up the event listener when component unmounts
+		return () => {
+			window.removeEventListener('wheel', handleWheel)
+		}
+	}, [scrollNumber]) // Include scrollNumber in the dependency array
+
+	return (
+		<>
+			<PerspectiveCamera
+				ref={(cam) => {
+					userCamRef.current = cam
+					setUserCam(cam)
+				}}
+				makeDefault={gui.camera === 'user'}
+				fov={55}
+				far={500}
+			/>
+			{gui.camera !== 'user' && <OrbitControls enableDamping target={[1.2, -0.5, -1.6]} />}
+
+			<FaceControls
+				camera={userCam}
+				ref={faceControlsApiRef}
+				makeDefault
+				manualUpdate
+				manualDetect
+				onVideoFrame={onVideoFrame}
+				smoothTime={smoothTimeValue}
+				offset={true}
+				offsetScalar={scrollNumber}
+				facemesh={{ origin: 0, position: [0, 2, 0] }}
+				debug={gui.camera !== 'user'}
+			/>
+
+			<Splat />
+		</>
+	)
 }
