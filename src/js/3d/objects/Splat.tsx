@@ -53,6 +53,8 @@ export default function Splat() {
 		<group name="lumaSplats Group" ref={boxRef}>
 			<lumaSplats
 				semanticsMask={LumaSplatsSemantics.FOREGROUND | LumaSplatsSemantics.BACKGROUND}
+				// semanticsMask={LumaSplatsSemantics.FOREGROUND}
+				// source='https://lumalabs.ai/capture/9ec5306a-4bd3-46fe-9522-1f8a1281f6b3'
 				source='https://lumalabs.ai/capture/a68f48e0-026f-4701-933c-457678434414'
 				// position={[-2, -0.37, 1.5]}
 				// rotation={[0, 2.6, 0]}

@@ -6,7 +6,6 @@ import * as THREE from 'three'
 import { useControls } from 'leva'
 import { easing } from 'maath'
 
-
 import Splat from './objects/Splat'
 
 export default function Scene() {
@@ -25,10 +24,9 @@ export default function Scene() {
 	const userCamRef = useRef()
 	useHelper(gui.camera !== 'user' && userCamRef, THREE.CameraHelper)
 
-
 	// ____ FaceControls  _________________________________________________________________________________
 	const [userCam, setUserCam] = useState()
-	const smoothTimeValue = 0.85;
+	const smoothTimeValue = 0.85
 
 	const controls = useThree((state) => state.controls)
 	const faceControlsApiRef = useRef()
