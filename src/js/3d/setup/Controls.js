@@ -1,24 +1,10 @@
-import React, { useEffect, useRef, useState, useCallback , useMemo} from 'react'
-import { useCanvas } from '../../context/CanvasContext'
+import React, { useEffect, useRef, useState } from 'react'
 import { PerspectiveCamera, OrbitControls, FaceControls, useHelper } from '@react-three/drei'
-import { useThree, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useControls } from 'leva'
-import { easing } from 'maath'
 
-import Background from './setup/Background'
-import Splat from './objects/Splat'
-import Splat2 from './objects/Splat2'
-import Splat3 from './objects/Splat3'
-
-export default function Scene({ sceneIndex }) {
-	const { setCanvasLoaded } = useCanvas()
-
-	// ____ Used for Loading Screen  _________________________________________________________________________________
-	useEffect(() => {
-		setCanvasLoaded(true)
-	}, [setCanvasLoaded])
-
+export default function Controls() {
+	
 	// ____ Debug FaceControls  _________________________________________________________________________________
 	const gui = useControls({
 		camera: { value: 'user', options: ['user', 'cc'] },
@@ -30,30 +16,6 @@ export default function Scene({ sceneIndex }) {
 	// ____ FaceControls  _________________________________________________________________________________
 	const [userCam, setUserCam] = useState()
 	const smoothTimeValue = 0.85
-
-	const controls = useThree((state) => state.controls)
-	const faceControlsApiRef = useRef()
-
-	const onVideoFrame = useCallback(
-		(e) => {
-			controls.detect(e.texture.source.data, e.time)
-		},
-		[controls]
-	)
-
-	const [current] = useState(() => new THREE.Object3D())
-	useFrame((_, delta) => {
-		if (faceControlsApiRef.current) {
-			const target = faceControlsApiRef.current.computeTarget()
-
-			const eps = 1e-9
-			easing.damp3(current.position, target.position, smoothTimeValue, delta, undefined, undefined, eps)
-			easing.dampE(current.rotation, target.rotation, smoothTimeValue, delta, undefined, undefined, eps)
-
-			userCam.position.copy(current.position)
-			userCam.rotation.copy(current.rotation)
-		}
-	})
 
 	// ____ Simulate OrbitControl Zoom _________________________________________________________________________________
 	const [scrollNumber, setScrollNumber] = useState(7)
@@ -85,19 +47,8 @@ export default function Scene({ sceneIndex }) {
 		}
 	}, [scrollNumber]) // Include scrollNumber in the dependency array
 
-	// ____ Render Splat depending on sceneIndex _________________________________________________________________________________
-	const sceneToRender = useMemo(() => {
-		if (sceneIndex === 1) {
-			return <Splat2 />
-		} else if (sceneIndex === 2) {
-			return <Splat3 />
-		} else {
-			return <Splat />
-		}
-	}, [sceneIndex])
-
 	return (
-		<>
+		<group name="Controls">
 			<PerspectiveCamera
 				ref={(cam) => {
 					userCamRef.current = cam
@@ -107,25 +58,17 @@ export default function Scene({ sceneIndex }) {
 				fov={55}
 				far={500}
 			/>
-			{gui.camera !== 'user' && <OrbitControls enableDamping target={[1.2, -0.5, -1.6]} />}
+			{/* {gui.camera !== 'user' && <OrbitControls enableDamping target={[1.2, -0.5, -1.6]} />} */}
+			<OrbitControls enableDamping target={[1.2, -0.5, -1.6]} />
 
 			<FaceControls
 				camera={userCam}
-				ref={faceControlsApiRef}
-				makeDefault
-				manualUpdate
-				manualDetect
-				onVideoFrame={onVideoFrame}
 				smoothTime={smoothTimeValue}
 				offset={true}
 				offsetScalar={scrollNumber}
 				facemesh={{ origin: 0, position: [0, 2, 0] }}
 				debug={gui.camera !== 'user'}
 			/>
-
-			{sceneToRender}
-
-			<Background />
-		</>
-	)
+		</group>
+	);
 }
