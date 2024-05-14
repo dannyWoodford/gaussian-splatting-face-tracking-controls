@@ -15,7 +15,7 @@ declare module '@react-three/fiber' {
 	}
 }
 
-export default function Splat() {
+export default function Splat2() {
 	const boxRef = useRef<THREE.Group>(null);
 	const targetRotation = useRef({ x: 0, y: 0 });
 
@@ -39,10 +39,11 @@ export default function Splat() {
 
 	useFrame(() => {
 		if (boxRef.current) {
-			// targetRotation.current.y += 0.002;
+			targetRotation.current.y += 0.005;
 
 			const { rotation } = boxRef.current;
 			rotation.x = ThreeMathUtils.lerp(rotation.x, targetRotation.current.x, 0.1);
+			// rotation.y = ThreeMathUtils.lerp(rotation.y, targetRotation.current.y, 0.1);
 			rotation.y = ThreeMathUtils.lerp(rotation.y, targetRotation.current.y, 0.1);
 		}
 	});
@@ -52,14 +53,13 @@ export default function Splat() {
 			<lumaSplats
 				semanticsMask={LumaSplatsSemantics.FOREGROUND | LumaSplatsSemantics.BACKGROUND}
 				// semanticsMask={LumaSplatsSemantics.FOREGROUND}
-				// source='https://lumalabs.ai/capture/9ec5306a-4bd3-46fe-9522-1f8a1281f6b3'
-				source='https://lumalabs.ai/capture/a68f48e0-026f-4701-933c-457678434414'
+				source='https://lumalabs.ai/capture/9ec5306a-4bd3-46fe-9522-1f8a1281f6b3'
 				// position={[-2, -0.37, 1.5]}
 				// rotation={[0, 2.6, 0]}
 
-				position={[1.5, 0.6, -0.8]}
-				rotation={[0, 2.4, 0]}
-				scale={1}
+				position={[0, 1, 0]}
+				rotation={[0, 1.9, 0]}
+				scale={3}
 				particleRevealEnabled={true}
 			/>
 		</group>

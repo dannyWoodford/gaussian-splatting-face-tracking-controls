@@ -9,9 +9,22 @@ import { Leva } from 'leva'
 import Scene from './3d/Scene'
 
 export default function CanvasContainer() {
-	const { isDev,
-		// canvasLoaded 
+	const {
+		isDev,
+		canvasLoaded,
+		sceneIndex,
+		setSceneIndex
 	} = useCanvas()
+
+	const goToNextScene = () => {
+		// @ts-ignore
+		setSceneIndex((prevIndex: number) => (prevIndex === sceneIndex - 1 ? 0 : prevIndex + 1));
+	};
+
+	const goToPreviousScene = () => {
+		// @ts-ignore
+		setSceneIndex((prevIndex: number) => (prevIndex === 0 ? sceneIndex - 1 : prevIndex - 1));
+	};
 
 	return (
 		<div className='canvas-container'>
@@ -23,12 +36,20 @@ export default function CanvasContainer() {
 				</div>
 			</div> */}
 
+			<div className={`carousel-buttons ${canvasLoaded ? 'show' : ''}`}>
+				<button className="arrow-button left" onClick={goToPreviousScene}>
+					&lt;
+				</button>
+				<button className="arrow-button right" onClick={goToNextScene}>
+					&gt;
+				</button>
+			</div>
+
 			<Leva hidden={!isDev} />
 
-			<Canvas
-			>
+			<Canvas>
 				<FaceLandmarker>
-					<Scene />
+					<Scene sceneIndex={sceneIndex} />
 				</FaceLandmarker>
 
 				{isDev && <Perf position='bottom-left' style={{ zIndex: 0 }} showGraph={false} deepAnalyze={true} />}

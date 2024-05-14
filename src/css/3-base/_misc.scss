@@ -47,3 +47,33 @@ body {
 		outline: none;
 	}
 }
+
+.carousel-buttons {
+	display: none;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	z-index: 1;
+	margin: 15px;
+
+	&.show {
+		display: flex;
+	}
+
+	.arrow-button {
+		background-color: $color-off-white;
+		border: none;
+		border-radius: 5px;
+		color: $color-black;
+		cursor: pointer;
+		font-size: 30px;
+		margin: 0 10px;
+		outline: none;
+		padding: 10px 20px;
+		transition: background-color 0.3s;
+	}
+
+	.arrow-button:hover {
+		background-color: $color-off-white-hover;
+	}
+}

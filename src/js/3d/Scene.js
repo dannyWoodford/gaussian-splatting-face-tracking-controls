@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react'
+import React, { useEffect, useRef, useState, useCallback , useMemo} from 'react'
 import { useCanvas } from '../../context/CanvasContext'
 import { PerspectiveCamera, OrbitControls, FaceControls, useHelper } from '@react-three/drei'
 import { useThree, useFrame } from '@react-three/fiber'
@@ -6,9 +6,12 @@ import * as THREE from 'three'
 import { useControls } from 'leva'
 import { easing } from 'maath'
 
+import Background from './setup/Background'
 import Splat from './objects/Splat'
+import Splat2 from './objects/Splat2'
+import Splat3 from './objects/Splat3'
 
-export default function Scene() {
+export default function Scene({ sceneIndex }) {
 	const { setCanvasLoaded } = useCanvas()
 
 	// ____ Used for Loading Screen  _________________________________________________________________________________
@@ -82,6 +85,17 @@ export default function Scene() {
 		}
 	}, [scrollNumber]) // Include scrollNumber in the dependency array
 
+	// ____ Render Splat depending on sceneIndex _________________________________________________________________________________
+	const sceneToRender = useMemo(() => {
+		if (sceneIndex === 1) {
+			return <Splat2 />
+		} else if (sceneIndex === 2) {
+			return <Splat3 />
+		} else {
+			return <Splat />
+		}
+	}, [sceneIndex])
+
 	return (
 		<>
 			<PerspectiveCamera
@@ -109,7 +123,9 @@ export default function Scene() {
 				debug={gui.camera !== 'user'}
 			/>
 
-			<Splat />
+			{sceneToRender}
+
+			<Background />
 		</>
 	)
 }
