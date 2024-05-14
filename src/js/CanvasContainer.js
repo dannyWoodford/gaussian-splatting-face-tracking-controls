@@ -4,7 +4,7 @@ import { Perf } from 'r3f-perf'
 import { useCanvas } from '../context/CanvasContext'
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
 import { Leva } from 'leva'
-
+import { useControls } from 'leva'
 
 import Scene from './3d/Scene'
 
@@ -17,14 +17,17 @@ export default function CanvasContainer() {
 	} = useCanvas()
 
 	const goToNextScene = () => {
-		// @ts-ignore
-		setSceneIndex((prevIndex: number) => (prevIndex === sceneIndex - 1 ? 0 : prevIndex + 1));
-	};
+		setSceneIndex((prevIndex) => (prevIndex === sceneIndex - 1 ? 0 : prevIndex + 1))
+	}
 
 	const goToPreviousScene = () => {
-		// @ts-ignore
-		setSceneIndex((prevIndex: number) => (prevIndex === 0 ? sceneIndex - 1 : prevIndex - 1));
-	};
+		setSceneIndex((prevIndex) => (prevIndex === 0 ? sceneIndex - 1 : prevIndex - 1))
+	}
+
+	const { bloomEnabled, vignetteEnabled } = useControls({
+    bloomEnabled: true,
+    vignetteEnabled: true
+  });
 
 	return (
 		<div className='canvas-container'>
@@ -56,12 +59,8 @@ export default function CanvasContainer() {
 				<AdaptiveDpr pixelated />
 
 				<EffectComposer>
-					<Bloom
-						luminanceThreshold={0} luminanceSmoothing={1.9}
-					/>
-					<Vignette
-						eskil={false} offset={0.1} darkness={0.96}
-					/>
+					{bloomEnabled && <Bloom luminanceThreshold={0} luminanceSmoothing={1.9} />}
+          {vignetteEnabled && <Vignette eskil={false} offset={0.1} darkness={0.96} />}
 				</EffectComposer>
 			</Canvas>
 		</div>
