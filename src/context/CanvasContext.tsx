@@ -4,6 +4,7 @@ type CanvasContextType = {
 	isDev: boolean;
 	canvasLoaded: boolean;
 	setCanvasLoaded: (canvasLoaded: boolean) => void;
+	sceneCount: number;
 	sceneIndex: number;
 	setSceneIndex: (sceneIndex: number) => void;
 };
@@ -18,8 +19,9 @@ const CanvasProvider: React.FC<CanvasProviderProps> = ({ children }) => {
 	const isDev = process.env.NODE_ENV === 'development';
 	const [canvasLoaded, setCanvasLoaded] = useState(false);
 	const [sceneIndex, setSceneIndex] = useState(0);
+	const sceneCount = 3;
 
-	const value = useMemo(() => ({ isDev, canvasLoaded, setCanvasLoaded, sceneIndex, setSceneIndex }), [isDev, canvasLoaded, sceneIndex]);
+	const value = useMemo(() => ({ isDev, canvasLoaded, setCanvasLoaded, sceneIndex, setSceneIndex, sceneCount }), [isDev, canvasLoaded, sceneIndex]);
 
 	return <CanvasContext.Provider value={value}>{children}</CanvasContext.Provider>;
 };

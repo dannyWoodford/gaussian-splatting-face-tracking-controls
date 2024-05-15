@@ -8,12 +8,9 @@ import Splat from './objects/Splat'
 import Splat2 from './objects/Splat2'
 import Splat3 from './objects/Splat3'
 
-interface SceneProps {
-	sceneIndex: number;
-}
 
-export default function Scene({ sceneIndex }: SceneProps): JSX.Element {
-	const { setCanvasLoaded } = useCanvas()
+export default function Scene(): JSX.Element {
+	const { setCanvasLoaded, sceneIndex } = useCanvas()
 
 	// ____ Used for Loading Screen  _________________________________________________________________________________
 	useEffect(() => {
@@ -22,6 +19,8 @@ export default function Scene({ sceneIndex }: SceneProps): JSX.Element {
 
 	// ____ Render Splat depending on sceneIndex _________________________________________________________________________________
 	const sceneToRender = useMemo(() => {
+		console.log('%csceneIndex', 'color:red;font-size:14px;', sceneIndex );
+		
 		if (sceneIndex === 1) {
 			return <Splat2 />
 		} else if (sceneIndex === 2) {

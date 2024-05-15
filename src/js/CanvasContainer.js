@@ -12,16 +12,16 @@ export default function CanvasContainer() {
 	const {
 		isDev,
 		canvasLoaded,
-		sceneIndex,
+		sceneCount,
 		setSceneIndex
 	} = useCanvas()
 
-	const goToNextScene = () => {
-		setSceneIndex((prevIndex) => (prevIndex === sceneIndex - 1 ? 0 : prevIndex + 1))
+	const goToNextScene = (sceneCount) => {
+		setSceneIndex((prevIndex) => (prevIndex === sceneCount - 1 ? 0 : prevIndex + 1))
 	}
 
-	const goToPreviousScene = () => {
-		setSceneIndex((prevIndex) => (prevIndex === 0 ? sceneIndex - 1 : prevIndex - 1))
+	const goToPreviousScene = (sceneCount) => {
+		setSceneIndex((prevIndex) => (prevIndex === 0 ? sceneCount - 1 : prevIndex - 1))
 	}
 
 	const { bloomEnabled, vignetteEnabled } = useControls({
@@ -40,10 +40,10 @@ export default function CanvasContainer() {
 			</div> */}
 
 			<div className={`carousel-buttons ${canvasLoaded ? 'show' : ''}`}>
-				<button className="arrow-button left" onClick={goToPreviousScene}>
+				<button className='arrow-button left' onClick={() => goToPreviousScene(sceneCount)}>
 					&lt;
 				</button>
-				<button className="arrow-button right" onClick={goToNextScene}>
+				<button className='arrow-button right' onClick={() => goToNextScene(sceneCount)}>
 					&gt;
 				</button>
 			</div>
@@ -52,7 +52,7 @@ export default function CanvasContainer() {
 
 			<Canvas>
 				<FaceLandmarker>
-					<Scene sceneIndex={sceneIndex} />
+					<Scene />
 				</FaceLandmarker>
 
 				{isDev && <Perf position='bottom-left' style={{ zIndex: 0 }} showGraph={false} deepAnalyze={true} />}
@@ -60,7 +60,7 @@ export default function CanvasContainer() {
 
 				<EffectComposer>
 					{bloomEnabled && <Bloom luminanceThreshold={0} luminanceSmoothing={1.9} />}
-          {vignetteEnabled && <Vignette eskil={false} offset={0.1} darkness={0.96} />}
+					{vignetteEnabled && <Vignette eskil={false} offset={0.1} darkness={0.96} />}
 				</EffectComposer>
 			</Canvas>
 		</div>
