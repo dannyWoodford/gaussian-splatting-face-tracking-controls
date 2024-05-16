@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { PerspectiveCamera, OrbitControls, FaceControls, useHelper } from '@react-three/drei'
 import * as THREE from 'three'
 import { useControls } from 'leva'
+import { useCanvas } from '../../../context/CanvasContext'
 
 export default function Controls() {
-	
+	const { hideOverlay } = useCanvas()
+
 	// ____ Debug FaceControls  _________________________________________________________________________________
 	const gui = useControls({
 		camera: { value: 'user', options: ['user', 'cc'] },
@@ -15,12 +17,14 @@ export default function Controls() {
 
 	// ____ FaceControls  _________________________________________________________________________________
 	const [userCam, setUserCam] = useState()
-	const smoothTimeValue = 0.85
+	const smoothTimeValue = 0.55
 
 	// ____ Simulate OrbitControl Zoom _________________________________________________________________________________
 	const [scrollNumber, setScrollNumber] = useState(7)
 
 	useEffect(() => {
+		if (!hideOverlay) return
+
 		const handleWheel = (event) => {
 			// Calculate the increment or decrement based on wheel direction
 			const increment = event.deltaY > 0 ? -1 : 1
@@ -45,10 +49,10 @@ export default function Controls() {
 		return () => {
 			window.removeEventListener('wheel', handleWheel)
 		}
-	}, [scrollNumber]) // Include scrollNumber in the dependency array
+	}, [scrollNumber, hideOverlay]) // Include scrollNumber in the dependency array
 
 	return (
-		<group name="Controls">
+		<group name='Controls'>
 			<PerspectiveCamera
 				ref={(cam) => {
 					userCamRef.current = cam
@@ -58,17 +62,17 @@ export default function Controls() {
 				fov={55}
 				far={500}
 			/>
-			{/* {gui.camera !== 'user' && <OrbitControls enableDamping target={[1.2, -0.5, -1.6]} />} */}
-			<OrbitControls enableDamping target={[1.2, -0.5, -1.6]} />
+			{gui.camera !== 'user' && <OrbitControls target={[1.2, -0.5, -1.6]} />}
 
 			<FaceControls
 				camera={userCam}
 				smoothTime={smoothTimeValue}
+				// eyes={true}
 				offset={true}
 				offsetScalar={scrollNumber}
 				facemesh={{ origin: 0, position: [0, 2, 0] }}
 				debug={gui.camera !== 'user'}
 			/>
 		</group>
-	);
+	)
 }

@@ -1,0 +1,214 @@
+@import url('https://rsms.me/inter/inter.css');
+
+.pmndrs-menu {
+	font-family: 'Inter var', sans-serif;
+	position: absolute;
+	z-index: 1000;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	color: #808080;
+	padding: 40px;
+	pointer-events: none;
+	justify-content: flex-start;
+	align-items: flex-end;
+	flex-direction: row;
+	// font-size: 10px;
+	font-size: calc(10px + 0.1vmin);
+	line-height: 1.5em;
+
+	&.after {
+		color: #303030;
+
+		& > div b {
+			color: #303030;
+			// color: #b0b0b0;
+		}
+
+		.pmndrs-menu svg {
+			fill: #303030;
+		}
+	}
+
+	> div {
+		word-wrap: none;
+		word-break: none;
+		white-space: pre;
+		padding-left: 25px;
+		padding-right: 25px;
+		display: flex;
+		justify-content: flex-start;
+		align-items: flex-start;
+		flex-direction: column;
+
+		b {
+			font-weight: 600;
+			color: #b0b0b0;
+		}
+	}
+
+	a {
+		pointer-events: all;
+		cursor: pointer;
+		color: inherit;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+			color: inherit;
+		}
+	}
+
+	/* ------------------------------------------------------------------------------------------------- */
+	.carousel-buttons {
+		display: none;
+		bottom: 0;
+		right: 0;
+		z-index: 1;
+		pointer-events: all;
+
+		&.show {
+			display: flex;
+		}
+
+		.arrow-button {
+			background-color: #303030;
+			border: none;
+			border-radius: 5px;
+			color: white;
+			cursor: pointer;
+			font-size: 30px;
+			margin: 0 10px;
+			outline: none;
+			padding: 4px 20px;
+			transition: background-color 0.3s;
+		}
+
+		.arrow-button:hover {
+			background-color: $color-off-white-hover;
+		}
+
+		/* ------------------------------------------------------------------------------------------------- */
+		.audio-button {
+			margin: auto;
+			margin-left: 40px;
+			border: 2px solid #fff;
+			width: 40px;
+			height: 40px;
+			border-radius: 100%;
+
+			.speaker {
+				height: 40px;
+				width: 40px;
+				position: absolute;
+				overflow: hidden;
+				margin: 3px;
+
+				span {
+					display: block;
+					width: 7px;
+					height: 7px;
+					background: #fff;
+					margin: 12px 0 0 1px;
+
+					&:after {
+						content: '';
+						position: absolute;
+						width: 0;
+						height: 0;
+						border-style: solid;
+						border-color: transparent #fff transparent transparent;
+						border-width: 10px 12px 10px 15px;
+						left: -13px;
+						top: 5px;
+					}
+
+					&:before {
+						transform: rotate(45deg);
+						border-radius: 0 50px 0 0;
+						content: '';
+						position: absolute;
+						width: 5px;
+						height: 5px;
+						border-style: double;
+						border-color: #fff;
+						border-width: 7px 7px 0 0;
+						left: 18px;
+						top: 9px;
+						transition: all 0.2s ease-out;
+					}
+				}
+
+				&:hover {
+					span:before {
+						transform: scale(0.8) translate(-17px, 0) rotate(42deg);
+					}
+
+					.mute {
+						opacity: 1;
+						transform: scale(1);
+					}
+				}
+
+				&.on {
+					.mute {
+						opacity: 1;
+						transform: scale(1);
+					}
+
+					span:before {
+						transform: scale(0.8) translate(-17px, 0) rotate(42deg);
+					}
+
+					&:hover {
+						span:before {
+							transform: scale(1) translate(0px, 0) rotate(42deg);
+							border-color: #7f7f7f;
+						}
+
+						.mute {
+							opacity: 0;
+							transform: scale(0.3);
+						}
+					}
+				}
+
+				.mute {
+					position: absolute;
+					width: 15px;
+					height: 15px;
+					opacity: 0;
+					left: 15px;
+					top: 7px;
+					transform: scale(0.3);
+					transition: all 0.2s ease-out;
+
+					&:before,
+					&:after {
+						position: absolute;
+						margin-left: 7px;
+						content: ' ';
+						height: 15px;
+						width: 2px;
+						background-color: #7f7f7f;
+					}
+
+					&:before {
+						transform: rotate(45deg);
+					}
+
+					&:after {
+						transform: rotate(-45deg);
+					}
+				}
+
+				&.on .mute:before,
+				&.on .mute:after {
+					background-color: #ffffff;
+				}
+			}
+		}
+	}
+}

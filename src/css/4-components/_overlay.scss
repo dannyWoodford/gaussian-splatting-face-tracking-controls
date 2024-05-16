@@ -1,0 +1,29 @@
+.fullscreen {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all 1s;
+	z-index: 1;
+}
+
+.bg {
+	background: #d0d0d0;
+}
+
+.fullscreen.notready {
+	color: #606060;
+}
+
+.fullscreen.loaded > div {
+	cursor: pointer;
+}
+
+.fullscreen.clicked {
+	pointer-events: none;
+	opacity: 0;
+}

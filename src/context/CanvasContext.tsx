@@ -4,6 +4,8 @@ type CanvasContextType = {
 	isDev: boolean;
 	canvasLoaded: boolean;
 	setCanvasLoaded: (canvasLoaded: boolean) => void;
+	hideOverlay: boolean;
+	setHideOverlay: (hideOverlay: boolean) => void;
 	sceneCount: number;
 	sceneIndex: number;
 	setSceneIndex: (sceneIndex: number) => void;
@@ -18,10 +20,12 @@ interface CanvasProviderProps {
 const CanvasProvider: React.FC<CanvasProviderProps> = ({ children }) => {
 	const isDev = process.env.NODE_ENV === 'development';
 	const [canvasLoaded, setCanvasLoaded] = useState(false);
-	const [sceneIndex, setSceneIndex] = useState(0);
-	const sceneCount = 3;
+	const [hideOverlay, setHideOverlay] = useState(false);
 
-	const value = useMemo(() => ({ isDev, canvasLoaded, setCanvasLoaded, sceneIndex, setSceneIndex, sceneCount }), [isDev, canvasLoaded, sceneIndex]);
+	const sceneCount = 3;
+	const [sceneIndex, setSceneIndex] = useState(0);
+
+	const value = useMemo(() => ({ isDev, canvasLoaded, setCanvasLoaded, hideOverlay, setHideOverlay, sceneIndex, setSceneIndex, sceneCount }), [isDev, canvasLoaded, hideOverlay, sceneIndex]);
 
 	return <CanvasContext.Provider value={value}>{children}</CanvasContext.Provider>;
 };

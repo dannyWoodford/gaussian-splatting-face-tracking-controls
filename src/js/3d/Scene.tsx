@@ -10,7 +10,7 @@ import Splat3 from './objects/Splat3'
 
 
 export default function Scene(): JSX.Element {
-	const { setCanvasLoaded, sceneIndex } = useCanvas()
+	const { setCanvasLoaded, sceneIndex, hideOverlay } = useCanvas()
 
 	// ____ Used for Loading Screen  _________________________________________________________________________________
 	useEffect(() => {
@@ -34,7 +34,7 @@ export default function Scene(): JSX.Element {
 		<>
 			<Controls />
 
-			{sceneToRender}
+			{hideOverlay && sceneToRender}
 
 			<Background />
 		</>
