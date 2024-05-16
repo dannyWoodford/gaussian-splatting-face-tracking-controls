@@ -15,7 +15,6 @@
 	justify-content: flex-start;
 	align-items: flex-end;
 	flex-direction: row;
-	// font-size: 10px;
 	font-size: calc(10px + 0.1vmin);
 	line-height: 1.5em;
 
@@ -24,7 +23,6 @@
 
 		& > div b {
 			color: #303030;
-			// color: #b0b0b0;
 		}
 
 		.pmndrs-menu svg {
