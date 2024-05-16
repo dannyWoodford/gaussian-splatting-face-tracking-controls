@@ -27,13 +27,13 @@ export function Footer() {
 			</div>
 			<div>
 				<span>
-					<b><a href="https://dannywoodforddev.web.app/home">Danny Woodford</a></b>
+					<b><a target="_blank" rel="noopener noreferrer" href="https://dannywoodforddev.web.app/home">Danny Woodford</a></b>
 				</span>
-				<a href="https://www.linkedin.com/in/danny-woodford-54b418126/">LinkedIn</a>
-				<a href="https://github.com/dannyWoodford">Github</a>
+				<a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/danny-woodford-54b418126/">LinkedIn</a>
+				<a target="_blank" rel="noopener noreferrer" href="https://github.com/dannyWoodford">Github</a>
 			</div>
 			<div>
-				<span><a href="https://github.com/dannyWoodford/gaussian-splatting-face-tracking-controls">View Code</a></span>
+				<span><a target="_blank" rel="noopener noreferrer" href="https://github.com/dannyWoodford/gaussian-splatting-face-tracking-controls">View Code</a></span>
 			</div>
 			<div style={{ width: '100%' }} />
 			<div>
