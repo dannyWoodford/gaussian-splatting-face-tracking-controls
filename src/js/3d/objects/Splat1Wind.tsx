@@ -4,9 +4,6 @@ import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three'
 import { MathUtils as ThreeMathUtils } from 'three';
 
-import Logo from './Logo'
-
-
 export default function Splat1Wind() {
 	const boxRef = useRef<THREE.Group>(null);
 	const targetRotation = new THREE.Vector3()
@@ -105,7 +102,6 @@ export default function Splat1Wind() {
 
 	return (
 		<group name="lumaSplats Group" ref={boxRef}>
-			<Logo />
 		</group>
 	);
 }
