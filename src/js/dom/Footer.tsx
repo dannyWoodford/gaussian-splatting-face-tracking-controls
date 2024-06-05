@@ -38,12 +38,12 @@ export function Footer() {
 			<div style={{ width: '100%' }} />
 			<div>
 				<div className={`carousel-buttons ${hideOverlay ? 'show' : ''}`}>
-					<button className='arrow-button left' onClick={() => goToPreviousScene(sceneCount)}>
+					{/* <button className='arrow-button left' onClick={() => goToPreviousScene(sceneCount)}>
 						&lt;
 					</button>
 					<button className='arrow-button right' onClick={() => goToNextScene(sceneCount)}>
 						&gt;
-					</button>
+					</button> */}
 					<AudioPlayer />
 				</div>
 				{/* <b>{link1}</b>

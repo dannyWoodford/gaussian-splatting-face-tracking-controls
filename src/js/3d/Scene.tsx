@@ -25,8 +25,8 @@ export default function Scene(): JSX.Element {
 		} else if (sceneIndex === 2) {
 			return <Splat3 />
 		} else {
-			return <Splat1Wind />
-			// return <Splat />
+			// return <Splat1Wind />
+			return <Splat />
 		}
 	}, [sceneIndex])
 

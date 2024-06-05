@@ -4,6 +4,7 @@ import { LumaSplatsThree, LumaSplatsSemantics } from "@lumaai/luma-web";
 import * as THREE from 'three'
 import { MathUtils as ThreeMathUtils } from 'three';
 
+import Logo from './Logo'
 
 // Make LumaSplatsThree available to R3F
 extend({ LumaSplats: LumaSplatsThree });
@@ -62,6 +63,8 @@ export default function Splat() {
 				scale={1}
 				particleRevealEnabled={true}
 			/>
+
+			<Logo />
 		</group>
 	);
 }
