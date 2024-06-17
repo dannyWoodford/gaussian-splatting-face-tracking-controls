@@ -13,32 +13,34 @@ import Overlay from './dom/Overlay'
 export default function CanvasContainer() {
 	const { isDev } = useCanvas()
 
-	const { bloomEnabled, vignetteEnabled } = useControls({
-		bloomEnabled: true,
-		vignetteEnabled: true,
-	})
+	// const { bloomEnabled, vignetteEnabled } = useControls({
+	// 	bloomEnabled: false,
+	// 	vignetteEnabled: false,
+	// 	// bloomEnabled: true,
+	// 	// vignetteEnabled: true,
+	// })
 
 	return (
 		<div className='canvas-container'>
-			<Leva hidden={!isDev} />
+			{/* <Leva hidden={!isDev} /> */}
 
-			<Canvas>
-				<FaceLandmarker>
-					<Scene />
-				</FaceLandmarker>
+			<Canvas gl={{ antialias: true, }}>
+				{/* <FaceLandmarker> */}
+				<Scene />
+				{/* </FaceLandmarker> */}
 
 				<Perf position='top-left' style={{ zIndex: 0 }} showGraph={false} deepAnalyze={true} />
 				{/* {isDev && <Perf position='top-left' style={{ zIndex: 0 }} showGraph={false} deepAnalyze={true} />} */}
-				<AdaptiveDpr pixelated />
+				{/* <AdaptiveDpr pixelated />
 
 				<EffectComposer>
 					{bloomEnabled && <Bloom luminanceThreshold={0} luminanceSmoothing={1.9} />}
 					{vignetteEnabled && <Vignette eskil={false} offset={0.1} darkness={0.96} />}
-				</EffectComposer>
+				</EffectComposer> */}
 			</Canvas>
 
-			<Overlay />
-			<Footer />
+			{/* <Overlay /> */}
+			{/* <Footer /> */}
 		</div>
 	)
 }

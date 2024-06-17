@@ -1,13 +1,21 @@
 import React, { useEffect, useMemo } from 'react'
 import { useCanvas } from '../../context/CanvasContext'
 
+import TestControls from './setup/TestControls'
 import Controls from './setup/Controls'
 import Background from './setup/Background'
 
 import Splat1Wind from './objects/Splat1Wind'
-import Splat from './objects/Splat'
+// import Splat from './objects/Splat'
+import Model from './objects/Model'
+import Particles from './objects/Particles'
+import ParticlesPlain from './objects/ParticlesPlain'
+import ParticlesPlainV2 from './objects/ParticlesPlainV2'
 import Splat2 from './objects/Splat2'
 import Splat3 from './objects/Splat3'
+
+import GPGPU from './objects/testGPGPU/GPGPU'
+
 
 
 export default function Scene(): JSX.Element {
@@ -32,11 +40,17 @@ export default function Scene(): JSX.Element {
 
 	return (
 		<>
-			<Controls />
+			<TestControls />
+			{/* <Controls /> */}
 
-			{hideOverlay && sceneToRender}
+			{/* {hideOverlay && sceneToRender} */}
+			{/* <Model /> */}
+			{/* <Particles /> */}
+			{/* <ParticlesPlain /> */}
+			<ParticlesPlainV2 />
+			{/* <GPGPU /> */}
 
-			<Background />
+			{/* <Background /> */}
 		</>
 	)
 }

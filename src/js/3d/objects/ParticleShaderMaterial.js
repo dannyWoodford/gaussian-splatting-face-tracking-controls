@@ -46,7 +46,7 @@ void main()
 
 const ParticleShaderMaterial = shaderMaterial(
 	{
-		uSize: 0.4,
+		uSize: 0.01,
 		uResolution: new THREE.Vector2(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio),
 	},
 	particlesVertexShader,

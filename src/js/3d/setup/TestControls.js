@@ -8,14 +8,15 @@ export default function TestControls() {
 
 	return (
 		<group name='Controls'>
-			<PerspectiveCamera 
-				fov={85} 
-				near={0.01}
-				far={1000}
-				position={[4.5, 4, 11]} 
+			<PerspectiveCamera
+				fov={45}
+				// near={0.001}
+				// position={[2, 1.5, 2]}
+				position={[4.5, 4, 11]}
+				makeDefault
 			/>
 
-			<OrbitControls />
+			<OrbitControls makeDefault />
 
 			<group name='Background'>
 				<directionalLight color='white' position={[0, 20, 10]} />

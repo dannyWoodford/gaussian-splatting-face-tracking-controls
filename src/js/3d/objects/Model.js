@@ -7,11 +7,19 @@ Source: https://sketchfab.com/3d-models/mv-spartan-e2c3ced464f14e3b864f15871bf6d
 Title: MV Spartan
 */
 
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF(process.env.PUBLIC_URL + '/model-2.glb')
+  const { nodes, materials } = useGLTF(process.env.PUBLIC_URL + '/model.glb')
+  const gltf = useGLTF(process.env.PUBLIC_URL + '/model.glb')
+
+		useEffect(() => {
+			console.log('%cnodes', 'color:red;font-size:14px;', nodes)
+			console.log('%cgltf', 'color:blue;font-size:14px;', gltf.scene.children[0])
+			console.log('%cgltf.scene', 'color:blue;font-size:14px;', gltf.scene.children[0])
+		}, [gltf])
+
   return (
     <group {...props} dispose={null}>
       <group position={[-2.285, 2.102, 3.339]} rotation={[-1.593, -0.002, 0.073]}>
