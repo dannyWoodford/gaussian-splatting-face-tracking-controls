@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Object3DNode, extend, useFrame } from '@react-three/fiber';
 import { LumaSplatsThree, LumaSplatsSemantics } from "@lumaai/luma-web";
 import * as THREE from 'three'
@@ -16,6 +16,8 @@ declare module '@react-three/fiber' {
 }
 
 export default function Splat2() {
+	const [initialAnimation, setInitialAnimation] = useState(false)
+
 	const boxRef = useRef<THREE.Group>(null);
 	const targetRotation = useRef({ x: 0, y: 0 });
 
@@ -36,14 +38,18 @@ export default function Splat2() {
 		};
 	}, []); // Add an empty dependency array to ensure the effect runs only once
 
-
 	useFrame(() => {
 		if (boxRef.current) {
-			targetRotation.current.y += 0.005;
 
+			if (targetRotation.current.y < 1.975 && !initialAnimation) {
+				targetRotation.current.y += 0.005;
+			} else if (!initialAnimation) {
+				setInitialAnimation(true)
+			} else {
+				// targetRotation.current.y += 0.003;
+			}
 			const { rotation } = boxRef.current;
 			rotation.x = ThreeMathUtils.lerp(rotation.x, targetRotation.current.x, 0.1);
-			// rotation.y = ThreeMathUtils.lerp(rotation.y, targetRotation.current.y, 0.1);
 			rotation.y = ThreeMathUtils.lerp(rotation.y, targetRotation.current.y, 0.1);
 		}
 	});
@@ -54,12 +60,9 @@ export default function Splat2() {
 				semanticsMask={LumaSplatsSemantics.FOREGROUND | LumaSplatsSemantics.BACKGROUND}
 				// semanticsMask={LumaSplatsSemantics.FOREGROUND}
 				source='https://lumalabs.ai/capture/9ec5306a-4bd3-46fe-9522-1f8a1281f6b3'
-				// position={[-2, -0.37, 1.5]}
-				// rotation={[0, 2.6, 0]}
 
-				position={[0, 1, 0]}
-				rotation={[0, 1.9, 0]}
-				scale={3}
+				position={[0, 1.6, 0]}
+				scale={2.95}
 				particleRevealEnabled={true}
 			/>
 		</group>

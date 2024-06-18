@@ -9,6 +9,8 @@ type CanvasContextType = {
 	sceneCount: number;
 	sceneIndex: number;
 	setSceneIndex: (sceneIndex: number) => void;
+	scrollNumber: number;
+	setScrollNumber: (scrollNumber: number) => void;
 };
 
 const CanvasContext = createContext<CanvasContextType | undefined>(undefined);
@@ -21,11 +23,14 @@ const CanvasProvider: React.FC<CanvasProviderProps> = ({ children }) => {
 	const isDev = process.env.NODE_ENV === 'development';
 	const [canvasLoaded, setCanvasLoaded] = useState(false);
 	const [hideOverlay, setHideOverlay] = useState(false);
-
+	
 	const sceneCount = 3;
 	const [sceneIndex, setSceneIndex] = useState(0);
 
-	const value = useMemo(() => ({ isDev, canvasLoaded, setCanvasLoaded, hideOverlay, setHideOverlay, sceneIndex, setSceneIndex, sceneCount }), [isDev, canvasLoaded, hideOverlay, sceneIndex]);
+	// ____ Simulate OrbitControl Zoom _________________________________________________________________________________
+	const [scrollNumber, setScrollNumber] = useState(7)
+
+	const value = useMemo(() => ({ isDev, canvasLoaded, setCanvasLoaded, hideOverlay, setHideOverlay, sceneIndex, setSceneIndex, sceneCount, scrollNumber, setScrollNumber }), [isDev, canvasLoaded, hideOverlay, sceneIndex, scrollNumber]);
 
 	return <CanvasContext.Provider value={value}>{children}</CanvasContext.Provider>;
 };

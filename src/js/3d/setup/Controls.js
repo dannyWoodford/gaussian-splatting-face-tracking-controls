@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
 import { PerspectiveCamera, OrbitControls, FaceControls, useHelper } from '@react-three/drei'
 import * as THREE from 'three'
 import { useControls } from 'leva'
 import { useCanvas } from '../../../context/CanvasContext'
 
 export default function Controls() {
-	const { hideOverlay } = useCanvas()
+	const { hideOverlay, sceneIndex, scrollNumber, setScrollNumber } = useCanvas()
 
 	// ____ Debug FaceControls  _________________________________________________________________________________
 	const gui = useControls({
@@ -20,7 +20,7 @@ export default function Controls() {
 	const smoothTimeValue = 0.55
 
 	// ____ Simulate OrbitControl Zoom _________________________________________________________________________________
-	const [scrollNumber, setScrollNumber] = useState(7)
+	// const [scrollNumber, setScrollNumber] = useState(7)
 
 	useEffect(() => {
 		if (!hideOverlay) return
@@ -33,7 +33,7 @@ export default function Controls() {
 			const sensitivityFactor = 0.4 // Adjust this value as needed
 
 			// Calculate the new scroll number within the desired range
-			const newScrollNumber = Math.min(Math.max(scrollNumber + increment * sensitivityFactor, 2), 35)
+			const newScrollNumber = Math.min(Math.max(scrollNumber + increment * sensitivityFactor, 1.3), 35)
 
 			// Update the state with the new scroll number
 			setScrollNumber(newScrollNumber)
@@ -49,7 +49,28 @@ export default function Controls() {
 		return () => {
 			window.removeEventListener('wheel', handleWheel)
 		}
-	}, [scrollNumber, hideOverlay]) // Include scrollNumber in the dependency array
+	}, [scrollNumber, hideOverlay, setScrollNumber])
+
+	// reset scrollNumber when sceneIndex changes
+	useEffect(() => {
+		if (sceneIndex === 0) {
+			setScrollNumber(7)
+		} else if (sceneIndex === 1) {
+			setScrollNumber(8)
+		} else if (sceneIndex === 2) {
+			setScrollNumber(7)
+		}
+	}, [sceneIndex, setScrollNumber])
+
+	const fovPerScene = useMemo(() => {
+		if (sceneIndex === 0) {
+			return 55
+		} else if (sceneIndex === 1) {
+			return 80
+		} else if (sceneIndex === 2) {
+			return 80
+		}
+	}, [sceneIndex])
 
 	return (
 		<group name='Controls'>
@@ -59,7 +80,7 @@ export default function Controls() {
 					setUserCam(cam)
 				}}
 				makeDefault={gui.camera === 'user'}
-				fov={55}
+				fov={fovPerScene}
 				far={500}
 			/>
 			{gui.camera !== 'user' && <OrbitControls target={[1.2, -0.5, -1.6]} />}

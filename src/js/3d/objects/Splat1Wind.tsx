@@ -40,10 +40,6 @@ export default function Splat1Wind() {
 		state.camera.position.lerp(newCamPos.set(state.pointer.x * 30, state.camera.position.y, state.pointer.y * 200), 0.005)
 	});
 
-
-
-
-
 	const { camera } = useThree();
 
 	const uniformTime = useMemo(() => new THREE.Uniform(0), []);

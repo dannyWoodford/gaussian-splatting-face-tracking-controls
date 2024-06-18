@@ -5,7 +5,7 @@ import Controls from './setup/Controls'
 import Background from './setup/Background'
 
 import Splat1Wind from './objects/Splat1Wind'
-import Splat from './objects/Splat'
+// import Splat from './objects/Splat'
 import Splat2 from './objects/Splat2'
 import Splat3 from './objects/Splat3'
 

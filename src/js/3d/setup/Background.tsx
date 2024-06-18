@@ -13,7 +13,6 @@ export default function Background() {
 
 	return (
 		<group name="Background">
-
 			<group name="Background Sphere" >
 				<ambientLight intensity={1} />
 
