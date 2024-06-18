@@ -19,9 +19,6 @@ export default function Controls() {
 	const [userCam, setUserCam] = useState()
 	const smoothTimeValue = 0.55
 
-	// ____ Simulate OrbitControl Zoom _________________________________________________________________________________
-	// const [scrollNumber, setScrollNumber] = useState(7)
-
 	useEffect(() => {
 		if (!hideOverlay) return
 

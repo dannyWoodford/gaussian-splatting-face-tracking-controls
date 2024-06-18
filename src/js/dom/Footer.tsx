@@ -22,34 +22,34 @@ export function Footer() {
 
 	return (
 		<div className={`pmndrs-menu ${hideOverlay ? '' : 'after'}`}>
-			<div>
-				<a target='_blank' rel='noopener noreferrer' href='https://dannywoodforddev.web.app/home'>
-					<OctoLogo style={{ width: 72, height: 72 }} color={hideOverlay ? '#b0b0b0' : '#303030'} />
-				</a>
-			</div>
-			<div>
-				<span>
-					<b><a target="_blank" rel="noopener noreferrer" href="https://dannywoodforddev.web.app/home">Danny Woodford</a></b>
-				</span>
-				<a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/danny-woodford-54b418126/">LinkedIn</a>
-				<a target="_blank" rel="noopener noreferrer" href="https://github.com/dannyWoodford">Github</a>
-			</div>
-			<div>
-				<span><a target="_blank" rel="noopener noreferrer" href="https://github.com/dannyWoodford/gaussian-splatting-face-tracking-controls">View Code</a></span>
+			<div className="pmndrs-menu-links">
+				<div>
+					<a target='_blank' rel='noopener noreferrer' href='https://dannywoodforddev.web.app/home'>
+						<OctoLogo 
+						color={hideOverlay ? '#b0b0b0' : '#303030'} />
+					</a>
+				</div>
+				<div>
+					<span className="my-name" >
+						<b><a target="_blank" rel="noopener noreferrer" href="https://dannywoodforddev.web.app/home">Danny Woodford</a></b>
+					</span>
+					<a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/danny-woodford-54b418126/">LinkedIn</a>
+					<a target="_blank" rel="noopener noreferrer" href="https://github.com/dannyWoodford">Github</a>
+					<a className="link-mobile" target="_blank" rel="noopener noreferrer" href="https://github.com/dannyWoodford/gaussian-splatting-face-tracking-controls">View Code</a>
+				</div>
+				<div>
+					<a className="link-desktop" target="_blank" rel="noopener noreferrer" href="https://github.com/dannyWoodford/gaussian-splatting-face-tracking-controls">View Code</a>
+				</div>
 			</div>
 			<div style={{ width: '100%' }} />
-			<div>
-				<div className={`carousel-buttons ${hideOverlay ? 'show' : ''}`}>
-					<button className='arrow-button left' onClick={() => goToPreviousScene(sceneCount)}>
-						&lt;
-					</button>
-					<button className='arrow-button right' onClick={() => goToNextScene(sceneCount)}>
-						&gt;
-					</button>
-					<AudioPlayer />
-				</div>
-				{/* <b>{link1}</b>
-				{link2} */}
+			<div className={`carousel-buttons ${hideOverlay ? 'show' : ''}`}>
+				<button className='arrow-button left' onClick={() => goToPreviousScene(sceneCount)}>
+					&lt;
+				</button>
+				<button className='arrow-button right' onClick={() => goToNextScene(sceneCount)}>
+					&gt;
+				</button>
+				<AudioPlayer />
 			</div>
 		</div>
 	)

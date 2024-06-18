@@ -63,7 +63,7 @@ export default function Splat3() {
 		}, 3500)
 
 		return () => clearTimeout(timeoutId)
-	}, [setScrollNumber]);
+	}, []);
 
 	const api = useSpringRef();
 	const springs = useSpring({

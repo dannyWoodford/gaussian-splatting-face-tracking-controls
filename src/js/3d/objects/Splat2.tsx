@@ -4,6 +4,8 @@ import { LumaSplatsThree, LumaSplatsSemantics } from "@lumaai/luma-web";
 import * as THREE from 'three'
 import { MathUtils as ThreeMathUtils } from 'three';
 
+import { useCanvas } from '../../../context/CanvasContext'
+
 
 // Make LumaSplatsThree available to R3F
 extend({ LumaSplats: LumaSplatsThree });
@@ -16,6 +18,8 @@ declare module '@react-three/fiber' {
 }
 
 export default function Splat2() {
+	const { setScrollNumber } = useCanvas()
+
 	const [initialAnimation, setInitialAnimation] = useState(false)
 
 	const boxRef = useRef<THREE.Group>(null);
@@ -53,6 +57,16 @@ export default function Splat2() {
 			rotation.y = ThreeMathUtils.lerp(rotation.y, targetRotation.current.y, 0.1);
 		}
 	});
+
+	// useEffect(() => {
+	// 	// if you want this camera zoom
+	// 	// set "reset scrollNumber" useEffect in Controls.js for "sceneIndex === 1" to 3
+	// 	const timeoutId = setTimeout(() => {
+	// 		setScrollNumber(8)
+	// 	}, 2000)
+
+	// 	return () => clearTimeout(timeoutId)
+	// }, [setScrollNumber]);
 
 	return (
 		<group name="lumaSplats Group" ref={boxRef}>
