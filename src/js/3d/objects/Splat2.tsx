@@ -4,7 +4,7 @@ import { LumaSplatsThree, LumaSplatsSemantics } from "@lumaai/luma-web";
 import * as THREE from 'three'
 import { MathUtils as ThreeMathUtils } from 'three';
 
-import { useCanvas } from '../../../context/CanvasContext'
+// import { useCanvas } from '../../../context/CanvasContext'
 
 
 // Make LumaSplatsThree available to R3F
@@ -18,7 +18,7 @@ declare module '@react-three/fiber' {
 }
 
 export default function Splat2() {
-	const { setScrollNumber } = useCanvas()
+	// const { setScrollNumber } = useCanvas()
 
 	const [initialAnimation, setInitialAnimation] = useState(false)
 
