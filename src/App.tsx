@@ -10,7 +10,7 @@ function App() {
 			<CanvasProvider>
 				<CanvasContainer />
 			</CanvasProvider>
-			</div>
+		</div>
   );
 }
 

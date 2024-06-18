@@ -1,7 +1,7 @@
 import { useCanvas } from '../../context/CanvasContext'
 import AudioPlayer from '../3d/setup/AudioPlayer'
 
-import { Logo } from './Logo'
+import { OctoLogo } from './Logo'
 
 export function Footer() {
 	const {
@@ -23,7 +23,9 @@ export function Footer() {
 	return (
 		<div className={`pmndrs-menu ${hideOverlay ? '' : 'after'}`}>
 			<div>
-				<Logo style={{ width: 42, height: 42 }} color={hideOverlay ? '#b0b0b0' : '#303030'} />
+				<a target='_blank' rel='noopener noreferrer' href='https://dannywoodforddev.web.app/home'>
+					<OctoLogo style={{ width: 72, height: 72 }} color={hideOverlay ? '#b0b0b0' : '#303030'} />
+				</a>
 			</div>
 			<div>
 				<span>
