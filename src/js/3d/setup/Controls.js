@@ -8,12 +8,19 @@ export default function Controls() {
 	const { hideOverlay, sceneIndex, scrollNumber, setScrollNumber } = useCanvas()
 
 	// ____ Debug FaceControls  _________________________________________________________________________________
-	const gui = useControls({
-		camera: { value: 'user', options: ['user', 'cc'] },
+	// const gui = useControls({
+	// 	camera: { value: 'user', options: ['user', 'cc'] },
+	// })
+
+	const { enableFaceControls } = useControls({
+		enableFaceControls: {
+			label: 'FaceControls',
+			value: true,
+		},
 	})
 
 	const userCamRef = useRef()
-	useHelper(gui.camera !== 'user' && userCamRef, THREE.CameraHelper)
+	// useHelper(gui.camera !== 'user' && userCamRef, THREE.CameraHelper)
 
 	// ____ FaceControls  _________________________________________________________________________________
 	const [userCam, setUserCam] = useState()
@@ -76,21 +83,26 @@ export default function Controls() {
 					userCamRef.current = cam
 					setUserCam(cam)
 				}}
-				makeDefault={gui.camera === 'user'}
+				// makeDefault={gui.camera === 'user'}
+				makeDefault
 				fov={fovPerScene}
 				far={500}
 			/>
-			{gui.camera !== 'user' && <OrbitControls target={[1.2, -0.5, -1.6]} />}
+			{/* {gui.camera !== 'user' && <OrbitControls target={[1.2, -0.5, -1.6]} />} */}
 
-			<FaceControls
-				camera={userCam}
-				smoothTime={smoothTimeValue}
-				// eyes={true}
-				offset={true}
-				offsetScalar={scrollNumber}
-				facemesh={{ origin: 0, position: [0, 2, 0] }}
-				debug={gui.camera !== 'user'}
-			/>
+			{enableFaceControls ? (
+				<FaceControls
+					camera={userCam}
+					smoothTime={smoothTimeValue}
+					// eyes={true}
+					offset={true}
+					offsetScalar={scrollNumber}
+					facemesh={{ origin: 0, position: [0, 2, 0] }}
+					// debug={gui.camera !== 'user'}
+				/>
+			) : (
+				<OrbitControls target={[0, 2, 0]} />
+			)}
 		</group>
 	)
 }

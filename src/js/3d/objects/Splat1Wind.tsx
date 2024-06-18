@@ -3,6 +3,7 @@ import { LumaSplatsThree } from "@lumaai/luma-web";
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three'
 import { MathUtils as ThreeMathUtils } from 'three';
+import { useControls } from 'leva'
 
 
 export default function Splat1Wind() {
@@ -27,6 +28,13 @@ export default function Splat1Wind() {
 	}); // Add an empty dependency array to ensure the effect runs only once
 
 
+	const { enableFaceControls } = useControls({
+		enableFaceControls: {
+			label: 'FaceControls',
+			value: true,
+		},
+	})
+
 	const newCamPos = new THREE.Vector3()
 
 	useFrame((state) => {
@@ -37,7 +45,9 @@ export default function Splat1Wind() {
 			rotation.y = ThreeMathUtils.lerp(rotation.y, targetRotation.y, 0.1);
 		}
 
-		state.camera.position.lerp(newCamPos.set(state.pointer.x * 30, state.camera.position.y, state.pointer.y * 200), 0.005)
+		if (enableFaceControls) {
+			state.camera.position.lerp(newCamPos.set(state.pointer.x * 30, state.camera.position.y, state.pointer.y * 200), 0.005)
+		}
 	});
 
 	const { camera } = useThree();
