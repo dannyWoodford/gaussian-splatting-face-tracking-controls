@@ -27,8 +27,8 @@ export default function CanvasContainer() {
 					<Scene />
 				</FaceLandmarker>
 
-				<Perf position='top-left' style={{ zIndex: 0 }} showGraph={false} deepAnalyze={true} />
-				{/* {isDev && <Perf position='top-left' style={{ zIndex: 0 }} showGraph={false} deepAnalyze={true} />} */}
+				{/* <Perf position='top-left' style={{ zIndex: 0 }} showGraph={false} deepAnalyze={true} /> */}
+				{isDev && <Perf position='top-left' style={{ zIndex: 0 }} showGraph={false} deepAnalyze={true} />}
 				<AdaptiveDpr pixelated />
 
 				<EffectComposer>
